@@ -10,12 +10,10 @@ def instructions():
 Welcome to the Ultimate conversion calculator!
 - Please enter a unit you want converted from and to
 - Mass (eg: 50 g to kg) unit options: mg, g, kg, T
-- Time (eg: 300 seconds to hours) unit options: ms, s, m, h, d, month, y 
-- Distance (eg: 500mm to m) unit options: mm, cm, m, km
--Volume(eg: 30L to ML) unit options: ml, L, kl, ML 
+- Time (eg: 300 s to h) unit options: ms, s, m, h, d, month, y 
+- Distance (eg: 500 mm to m) unit options: mm, cm, m, km
 
--Please convert using the same units! It will not work otherwise
-
+-Please no cross converting units
 To exit the program, just type "xxx"
 
 ("Have fun!")
@@ -30,28 +28,25 @@ want_instructions = input("Press <enter> to read the instructions "
 if want_instructions == "":
     instructions()
 
+def num_check(question):
+    error = "you chose to continue\n"
+    while True:
+        response = input(question).lower
+        if response == "xxx":
+            return response
+
+        try:
+            # ask user for a number
+            response = int(response)
+        except ValueError:
+            print(error)
+
 distance_dict = {
     "mm": 1000,
     "cm": 100,
     "m": 1,
     "km": .001
 }
-
-# Get amount and units (assume they are valid)
-amount = float(input("Unit amount? "))
-from_unit = input("From unit? ")
-to_unit = input("To unit? ")
-
-# Multiply to get to our standard value...
-multiply_by = distance_dict[to_unit]
-standard = amount * multiply_by
-
-# Divide to get our desired value
-divide_by = distance_dict[from_unit]
-answer = standard / divide_by
-
-print(f"There are {answer} {to_unit} in {amount} {from_unit}")
-
 time_dict = {
     "ms": 3600 * 1000,
     "s": 3600,
@@ -61,28 +56,25 @@ time_dict = {
     "month": 1 / 168,
     "y": 1 / (24 * 365 + 6 + 9 / 60) # accounts for leap years
 }
-
-# Get amount and units (assume they are valid)
-amount = float(input("Unit amount? "))
-from_unit = input("From unit? ")
-to_unit = input("To unit? ")
-
-# Multiply to get to our standard value...
-multiply_by = time_dict[to_unit]
-standard = amount * multiply_by
-
-# Divide to get our desired value
-divide_by = time_dict[from_unit]
-answer = standard / divide_by
-
-print(f"There are {answer} {to_unit} in {amount} {from_unit}")
-
 mass_dict= {
-    "mg": 1000 * 1000,
-    "g": 1000,
-    "kg": 1,
-    "T": .001,
+    "mg": 1000,
+    "g": 1,
+    "kg": .001,
+    "T": .00001,
 }
+# combine for checking
+all_units = {**distance_dict,**time_dict,**mass_dict}
+
+# unit categories
+def get_category(unit):
+    if unit in distance_dict:
+        return "distance"
+    if unit in time_dict:
+        return "time"
+    if unit in mass_dict:
+        return "mass"
+    else:
+        return None
 
 # Get amount and units (assume they are valid)
 amount = float(input("how much? "))
@@ -96,36 +88,26 @@ standard = amount * multiply_by
 # Divide to get our desired value
 divide_by = mass_dict[from_unit]
 answer = standard / divide_by
+if (from_unit in distance_dict and to_unit in distance_dict or
+        from_unit in mass_dict and to_unit in mass_dict or
+        from_unit in time_dict and to_unit in time_dict):
+    print(f"There are answer {to_unit} in {amount} {from_unit}")
+    print()
 
-print(f"There are {answer} {to_unit} in {amount} {from_unit}")
-
-vol_dict= {
-    "ml": 1000 * 1000,
-    "L": 1000,
-    "kl": 1,
-    "ML": .001,
-}
-
-# Get amount and units (assume they are valid)
-amount = float(input("how much? "))
-from_unit = input("From unit? ")
-to_unit = input("To unit? ")
-
-# Multiply to get to our standard value...
-multiply_by = vol_dict[to_unit]
-standard = amount * multiply_by
-
-# Divide to get our desired value
-divide_by = vol_dict[from_unit]
-answer = standard / divide_by
-
-print(f"There are {answer} {to_unit} in {amount} {from_unit}")
-
-print(f"Thank you for using the ultimate conversion calculator!")
+# check if units are valid
+if from_unit not in all_units or to_unit not in all_units:
+    print(f"Cannot convert, enter a valid answer")
+else:
+    from_cat = get_category(from_unit)
+    to_cat = get_category(to_unit)
+    if from_cat != to_cat:
+        print(f"Cannot convert {from_unit}({from_cat}) to {to_unit}({to_cat})")
+        print()
 
 while True:
-        if amount == "xxx":
-            break
+    to_convert = num_check("End?: ")
 
-print("Have fun!")
 
+
+
+print(f"Thank you for using the ultimate conversion calculator!")
