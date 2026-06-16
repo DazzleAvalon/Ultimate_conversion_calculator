@@ -21,7 +21,7 @@ To exit the program, just type "xxx"
 
 # Main routine goes here
 
-statement_generator("The ultimate conversion calculator" ,"-")
+statement_generator("The Ultimate Conversion Calculator" ,"-")
 
 # Display instructions if requested
 want_instructions = input("Press <enter> to read the instructions " 
@@ -67,7 +67,7 @@ mass_dict= {
 # combine for checking
 all_units = {**distance_dict,**time_dict,**mass_dict}
 
-# unit categories
+# get unit categories
 def get_category(unit):
     if unit in distance_dict:
         return "distance"
@@ -83,14 +83,13 @@ from_unit = input("From unit? ")
 to_unit = input("To unit? ")
 
 # Multiply to get to our standard value...
-multiply_by = all_units[from_unit]
+multiply_by = all_units[to_unit]
 standard = amount * multiply_by
 
 # Divide to get our desired value
-divide_by = all_units[to_unit]
+divide_by = all_units[from_unit]
 answer = standard / divide_by
-if (from_unit in distance_dict and to_unit in distance_dict or
-        from_unit in mass_dict and to_unit in mass_dict or
+if (from_unit in distance_dict and to_unit in distance_dict or from_unit in mass_dict and to_unit in mass_dict or
         from_unit in time_dict and to_unit in time_dict):
     print(f"There are {answer} {to_unit} in {amount} {from_unit}")
     print()
