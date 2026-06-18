@@ -106,7 +106,7 @@ else:
 
 
 while True:
-    to_convert = num_check("End?: ")
+    to_convert = num_check("Again?: ")
     print("You chose to end, I hope you enjoyed")
 
     if to_convert == "xxx":
