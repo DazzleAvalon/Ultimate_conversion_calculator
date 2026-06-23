@@ -19,6 +19,32 @@ To exit the program, just type "xxx"
 ("Have fun!")
    ''')
 
+# get unit categories
+def get_category(unit):
+    if unit in distance_dict:
+        return "distance"
+    elif unit in time_dict:
+        return "time"
+    elif unit in mass_dict:
+        return "mass"
+    else:
+        return None
+
+def num_check(question):
+        error = "You chose to continue\n"
+        while True:
+
+            response = input(question).lower()
+            if response == "xxx":
+                return response
+
+            try:
+                # ask user for a number
+                response = int(response)
+            except ValueError:
+                print(error)
+
+
 # Main routine goes here
 
 statement_generator("The Ultimate Conversion Calculator" ,"-")
@@ -29,19 +55,6 @@ want_instructions = input("Press <enter> to read the instructions "
 
 if want_instructions == "":
     instructions()
-def num_check(question):
-    error = "you chose to continue\n"
-    while True:
-
-        response = input(question).lower
-        if response == "xxx":
-            return response
-
-        try:
-            # ask user for a number
-            response = int(response)
-        except ValueError:
-            print(error)
 
 distance_dict = {
     "mm": 1000,
@@ -64,52 +77,51 @@ mass_dict= {
     "kg": .001,
     "T": .000001,
 }
-# combine for checking
+    # combine for checking
 all_units = {**distance_dict,**time_dict,**mass_dict}
 
-# get unit categories
-def get_category(unit):
-    if unit in distance_dict:
-        return "distance"
-    elif unit in time_dict:
-        return "time"
-    elif unit in mass_dict:
-        return "mass"
+while True:
+
+    # Get amount and units (assume they are valid)
+    amount = float(input("how much? "))
+    from_unit = input("From unit? ")
+    to_unit = input("To unit? ")
+
+    # check if units are valid
+    if from_unit not in all_units or to_unit not in all_units:
+        print(f"Cannot convert, enter a valid answer")
     else:
-        return None
-# Get amount and units (assume they are valid)
-amount = float(input("how much? "))
-from_unit = input("From unit? ")
-to_unit = input("To unit? ")
+        from_cat = get_category(from_unit)
+        to_cat = get_category(to_unit)
+        if from_cat != to_cat:
+            print(f"Cannot convert {from_unit}({from_cat}) to {to_unit}({to_cat})")
+            print()
 
-# Multiply to get to our standard value...
-multiply_by = all_units[to_unit]
-standard = amount * multiply_by
+    # Multiply to get to our standard value...
+    multiply_by = all_units[to_unit]
+    standard = amount * multiply_by
 
-# Divide to get our desired value
-divide_by = all_units[from_unit]
-answer = standard / divide_by
-if (from_unit in distance_dict and to_unit in distance_dict or from_unit in mass_dict and to_unit in mass_dict or
-        from_unit in time_dict and to_unit in time_dict):
-    print(f"There are {answer} {to_unit} in {amount} {from_unit}")
-    print()
-
-# check if units are valid
-if from_unit not in all_units or to_unit not in all_units:
-    print(f"Cannot convert, enter a valid answer")
-else:
-    from_cat = get_category(from_unit)
-    to_cat = get_category(to_unit)
-    if from_cat != to_cat:
-        print(f"Cannot convert {from_unit}({from_cat}) to {to_unit}({to_cat})")
+    # Divide to get our desired value
+    divide_by = all_units[from_unit]
+    answer = standard / divide_by
+    if (from_unit in distance_dict and to_unit in distance_dict or from_unit in mass_dict and to_unit in mass_dict or
+            from_unit in time_dict and to_unit in time_dict):
+        print(f"There are {answer} {to_unit} in {amount} {from_unit}")
         print()
 
+    # check if units are valid
+    if from_unit not in all_units or to_unit not in all_units:
+        print(f"Cannot convert, enter a valid answer")
+    else:
+        from_cat = get_category(from_unit)
+        to_cat = get_category(to_unit)
+        if from_cat != to_cat:
+            print(f"Cannot convert {from_unit}({from_cat}) to {to_unit}({to_cat})")
+            print()
 
-while True:
-    to_convert = num_check("Again?: ")
-    print("You chose to end, I hope you enjoyed")
+        to_convert = num_check("Again?: ")
+        print("You chose to end, I hope you enjoyed")
+        if to_convert == "xxx":
+            break
 
-    if to_convert == "xxx":
-        break
-
-print(f"Thank you for using the ultimate conversion calculator!")
+    print(f"Thank you for using the ultimate conversion calculator!")
