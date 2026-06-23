@@ -122,7 +122,9 @@ while True:
             print()
 
         more_calcs = input("Again?: ")
-        print("You chose to continue!\n")
+
+        if more_calcs == "":
+            print("You chose to continue!\n")
 
         if more_calcs == "xxx":
             print("You chose to end, I hope you enjoyed")
