@@ -40,7 +40,9 @@ def num_check(question):
 
             try:
                 # ask user for a number
-                response = int(response)
+                response = float(response)
+                return response
+
             except ValueError:
                 print(error)
 
@@ -119,9 +121,10 @@ while True:
             print(f"Cannot convert {from_unit}({from_cat}) to {to_unit}({to_cat})")
             print()
 
-        to_convert = num_check("Again?: ")
-        print("You chose to end, I hope you enjoyed")
-        if to_convert == "xxx":
-            break
+        more_calcs = input("Again?: ")
+        print("You chose to continue!\n")
 
-    print(f"Thank you for using the ultimate conversion calculator!")
+        if more_calcs == "xxx":
+            print("You chose to end, I hope you enjoyed")
+            print(f"Thank you for using the ultimate conversion calculator!")
+            break
