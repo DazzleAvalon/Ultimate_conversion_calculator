@@ -13,10 +13,10 @@ Welcome to the Ultimate conversion calculator!
 - Time (eg: 300 s to h) unit options: ms, s, min, h, d, month, y 
 - Distance (eg: 500 mm to m) unit options: mm, cm, m, km
 
--Please no cross converting units
-To exit the program, just type "xxx"
+-Please no cross converting units (eg: 3 mg to s)
+To exit the program, just type "xxx" or press space to continue
 
-("Have fun!")
+Have fun!
    ''')
 
 # get unit categories
