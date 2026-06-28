@@ -111,16 +111,6 @@ while True:
         print(f"There are {answer} {to_unit} in {amount} {from_unit}")
         print()
 
-    # check if units are valid
-    if from_unit not in all_units or to_unit not in all_units:
-        print(f"Cannot convert, enter a valid answer")
-    else:
-        from_cat = get_category(from_unit)
-        to_cat = get_category(to_unit)
-        if from_cat != to_cat:
-            print(f"Cannot convert {from_unit}({from_cat}) to {to_unit}({to_cat})")
-            print()
-
         more_calcs = input("Again?: ")
 
         if more_calcs == "":
